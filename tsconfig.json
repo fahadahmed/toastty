@@ -13,7 +13,7 @@
     "resolveJsonModule": true
   },
   "include": [
-    "src/**/*"
+    "./src/**/*"
   ],
   "rules": {
     "react/prop-types": ["off"]
