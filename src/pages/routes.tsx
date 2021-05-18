@@ -5,7 +5,7 @@ import Home from './Home';
 import Login from './Login';
 
 const Routes: FC = () => {
-  console.log(process.env.REACT_APP_APP_ID); 
+  console.log(process.env.REACT_APP_PROJECT_ID); 
   return (
     <Router>
       <Switch>
