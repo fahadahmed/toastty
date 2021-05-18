@@ -1,6 +1,7 @@
 const path = require('path');
 const HtmlWebpackPlugin = require('html-webpack-plugin');
 const Dotenv = require('dotenv-webpack');
+const TsconfigPathPlugin = require('tsconfig-paths-webpack-plugin');
 
 module.exports = [
   {
@@ -27,7 +28,14 @@ module.exports = [
         },
       ],
     },
-    resolve: { extensions: ['.ts', '.tsx', '.js', '.jsx'] },
+    resolve: {
+      extensions: ['.ts', '.tsx', '.js', '.jsx'],
+      plugins: [
+        new TsconfigPathPlugin({
+          configFile: 'tsconfig.json',
+        }),
+      ],
+    },
     devtool: 'inline-source-map',
     devServer: {
       contentBase: path.join(__dirname, 'public'),
