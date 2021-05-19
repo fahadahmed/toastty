@@ -7,18 +7,21 @@ import Dashboard from './Dashboard';
 
 import { AppProvider } from '../components/AppProvider/AppContext';
 import PrivateRoute from '../components/PrivateRoute';
+import AppContainer from '../components/AppContainer';
 
 const Routes: FC = () => {
   return (
     <AppProvider>
-      <Router>
-        <Switch>
-          <Route path='/home' component={Home} />
-          <Route path='/login' component={Login} />
-          <PrivateRoute path='/dashboard' component={Dashboard} />
-          <Redirect from="/" to="/home" />
-        </Switch>
-      </Router>
+      <AppContainer>
+        <Router>
+          <Switch>
+            <Route path='/home' component={Home} />
+            <Route path='/login' component={Login} />
+            <PrivateRoute path='/dashboard' component={Dashboard} />
+            <Redirect from="/" to="/home" />
+          </Switch>
+        </Router>
+      </AppContainer>
     </AppProvider>
   );
 };
