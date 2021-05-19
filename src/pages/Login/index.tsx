@@ -1,15 +1,20 @@
 import React, { useState, useContext } from 'react';
-import { Link, Redirect, withRouter } from 'react-router-dom';
+import { Link, Redirect } from 'react-router-dom';
 import {AppContext} from '../../components/AppProvider/AppContext';
 import { auth } from '../../config/firebase';
 
-function Login({history}): JSX.Element {
+function Login(): JSX.Element {
   const [error, setError] = useState(null);
   
-  const handleLogin = event => {
+  const handleLogin = (event: React.SyntheticEvent) => {
     event.preventDefault();
-    const { email, password } = event.target.elements;
-    const lgn = auth().signInWithEmailAndPassword(email.value, password.value)
+    const target = event.target as typeof event.target & {
+      email: { value: string };
+      password: { value: string };
+    };
+    const email = target.email.value;
+    const password = target.password.value;
+    const lgn = auth().signInWithEmailAndPassword(email, password)
     .catch(err => {
       console.log(err);
       setError(err.message);
