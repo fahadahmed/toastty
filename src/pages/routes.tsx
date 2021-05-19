@@ -3,17 +3,23 @@ import { BrowserRouter as Router, Route, Redirect, Switch } from 'react-router-d
 
 import Home from './Home';
 import Login from './Login';
+import Dashboard from './Dashboard';
+
+import { AppProvider } from '../components/AppProvider/AppContext';
+import PrivateRoute from '../components/PrivateRoute';
 
 const Routes: FC = () => {
-  console.log(process.env.REACT_APP_PROJECT_ID); 
   return (
-    <Router>
-      <Switch>
-        <Route path='/home' component={Home} />
-        <Route path='/login' component={Login} />
-        <Redirect from="/" to="/home" />
-      </Switch>
-    </Router>
+    <AppProvider>
+      <Router>
+        <Switch>
+          <Route path='/home' component={Home} />
+          <Route path='/login' component={Login} />
+          <PrivateRoute path='/dashboard' component={Dashboard} />
+          <Redirect from="/" to="/home" />
+        </Switch>
+      </Router>
+    </AppProvider>
   );
 };
 
