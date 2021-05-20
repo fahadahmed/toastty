@@ -11,6 +11,7 @@ const Home: FC = () => {
       <h1>Home Page</h1>
       <div>
         <div><Link to="/login">Login</Link></div>
+        <div><Link to="/register">Register New User</Link></div>
       </div>
     </>
   );

@@ -3,6 +3,7 @@ import { BrowserRouter as Router, Route, Redirect, Switch } from 'react-router-d
 
 import Home from './Home';
 import Login from './Login';
+import Register from './Register';
 import Dashboard from './Dashboard';
 
 import { AppProvider } from '../components/AppProvider/AppContext';
@@ -17,6 +18,7 @@ const Routes: FC = () => {
           <Switch>
             <Route path='/home' component={Home} />
             <Route path='/login' component={Login} />
+            <Route path='/register' component={Register} />
             <PrivateRoute path='/dashboard' component={Dashboard} />
             <Redirect from="/" to="/home" />
           </Switch>
