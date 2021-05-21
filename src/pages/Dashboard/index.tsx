@@ -2,6 +2,7 @@ import React, { useState, useContext } from 'react';
 import { auth } from '../../config/firebase';
 import { AppContext } from '../../components/AppProvider/AppContext';
 import Timer from '../../components/Timer';
+import Header from '../../components/Header';
 
 function Dashboard(): JSX.Element {
   const { currentUser } = useContext(AppContext);
@@ -26,6 +27,7 @@ function Dashboard(): JSX.Element {
   }
   return(
     <div>
+      <Header />
       <h1>Dashboard Page</h1>
       <button onClick={() => auth().signOut()}>Log out</button>
       <h2>{currentUser.displayName}</h2>
