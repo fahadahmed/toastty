@@ -1,5 +1,4 @@
 import React, { useState, useContext } from 'react';
-import { auth } from '../../config/firebase';
 import { AppContext } from '../../components/AppProvider/AppContext';
 import Timer from '../../components/Timer';
 import Header from '../../components/Header';
