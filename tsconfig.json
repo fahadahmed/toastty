@@ -12,6 +12,12 @@
     "jsx": "react",
     "resolveJsonModule": true
   },
+  "paths": {
+    "@components/*": ["components/*"],
+    "@images/*": ["images/*"],
+    "@models/*": ["models/*"],
+    "@utils/*": ["utils/*"],
+  },
   "include": [
     "./src/**/*"
   ],
