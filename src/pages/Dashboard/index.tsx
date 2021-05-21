@@ -2,6 +2,7 @@ import React, { useState, useContext } from 'react';
 import { AppContext } from '../../components/AppProvider/AppContext';
 import Timer from '../../components/Timer';
 import Header from '../../components/Header';
+import AddEntry from '../../components/AddEntry';
 
 function Dashboard(): JSX.Element {
   const { currentUser } = useContext(AppContext);
@@ -27,6 +28,7 @@ function Dashboard(): JSX.Element {
   return(
     <div>
       <Header />
+      <AddEntry />
       <div>
         <h3>Add Entry</h3>
         <form onSubmit={handleNewEntry}>
