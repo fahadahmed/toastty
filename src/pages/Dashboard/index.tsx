@@ -28,11 +28,6 @@ function Dashboard(): JSX.Element {
   return(
     <div>
       <Header />
-      <h1>Dashboard Page</h1>
-      <button onClick={() => auth().signOut()}>Log out</button>
-      <h2>{currentUser.displayName}</h2>
-      
-
       <div>
         <h3>Add Entry</h3>
         <form onSubmit={handleNewEntry}>
