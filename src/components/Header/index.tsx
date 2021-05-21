@@ -1,29 +1,23 @@
 import React, { useContext } from 'react';
-import styled from '@emotion/styled';
 
 import { auth } from '../../config/firebase';
 import { AppContext } from '../AppProvider/AppContext';
-
-const borderColor = '#d9e0e5';
-
-const HeaderContainer = styled.div`
-  display: flex;
-  flex-direction: row nowrap;
-  border-bottom: 1px solid ${borderColor};
-  justify-content: space-between;
-  padding: 10px;
-`;
+import * as HeaderStyles from './styles';
 
 const Header = () => {
   const { currentUser } = useContext(AppContext);
   return (
-    <HeaderContainer>
-      <div>Toastty</div>
+    <HeaderStyles.Container>
+      <HeaderStyles.Title>Toastty</HeaderStyles.Title>
       <div>
-        <span>{currentUser.displayName}</span>
-        <button onClick={() => auth().signOut()}>Log out</button>
+        <HeaderStyles.Username>{currentUser.displayName}</HeaderStyles.Username>
+        <HeaderStyles.LogoutBtn 
+          onClick={() => auth().signOut()}
+        >
+          Log out
+        </HeaderStyles.LogoutBtn>
       </div>
-    </HeaderContainer>
+    </HeaderStyles.Container>
   );
 };
 
