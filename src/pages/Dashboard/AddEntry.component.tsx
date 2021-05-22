@@ -3,7 +3,7 @@ import styled from '@emotion/styled';
 import { borderColor } from '../../styles/variables';
 
 const Container = styled.div`
-  padding: 40px;
+  padding: 40px 80px;
 `;
 
 const Form = styled.form`

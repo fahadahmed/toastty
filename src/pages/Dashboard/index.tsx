@@ -2,7 +2,8 @@ import React, { useState, useContext } from 'react';
 import { AppContext } from '../../components/AppProvider/AppContext';
 import Timer from '../../components/Timer';
 import Header from '../../components/Header';
-import AddEntry from '../../components/AddEntry';
+import AddEntry from './AddEntry.component';
+import Entries from './Entries.component';
 
 function Dashboard(): JSX.Element {
   const { currentUser } = useContext(AppContext);
@@ -29,23 +30,7 @@ function Dashboard(): JSX.Element {
     <div>
       <Header />
       <AddEntry />
-      <div>
-        <h3>Add Entry</h3>
-        <form onSubmit={handleNewEntry}>
-          <input type="text" placeholder="Project Name" name="project" />
-          <input type="text" placeholder="Client Name" name="client" />
-          <button type="submit">Add Entry</button>
-          <Timer />
-        </form>
-      </div>
-      <div>
-        <h3>Recorded Entries</h3>
-        <ul>
-          {entries.map((entry, i) => (
-            <li key={i}>{entry.user} - {entry.project} - {entry.client}</li>
-          ))}
-        </ul>
-      </div>
+      <Entries />
     </div>
   )
 }
