@@ -1,6 +1,10 @@
 import React, { useState } from 'react';
 import styled from '@emotion/styled';
-import { borderColor } from '../../styles/variables';
+import { borderColor, fontColor } from '../../styles/variables';
+import useTimer from '../../components/Timer/useTimer';
+import { formatTime } from '../../components/Timer/helper';
+import PlayIcon from '../../assets/icons/play-circle-solid.svg';
+import StopIcon from '../../assets/icons/stop-circle-solid.svg';
 
 const Container = styled.div`
   padding: 40px 80px;
@@ -41,21 +45,37 @@ const TimerContainer = styled.div`
   display: grid;
   justify-content: center;
   align-items: center;
+  font-size: 36px;
+  color: ${fontColor};
+  font-weight: lighter;
+`;
+const Button = styled.button`
+  background: none;
+  border: none;
 `;
 
 const AddEntry = () => {
-
-  const [makeEntry, setMakeEntry] = useState(false);
+  const [entry, setEntry] = useState(null);
+  const { timer, isActive, handleStart, handleReset } = useTimer();
 
   const handleSubmission = (e: React.SyntheticEvent) => {
     e.preventDefault();
-    console.log("We need to submit the data now");
+    const target = e.target as typeof e.target & {
+      description: {value: string },
+      project: { value: string };
+      client: { value: string };
+    };
+
+    const description = target.description.value;
+    const project = target.project.value;
+    const client = target.client.value;
+    console.log(description, project, client, timer);
+    handleReset();
   }
 
   const startTimer = (e: React.SyntheticEvent) => {
     e.preventDefault();
-    console.log("We need to start the timer and hide this button and show the submit button");
-    setMakeEntry(true);
+    handleStart();
   }
   return(
     <Container>
@@ -68,10 +88,14 @@ const AddEntry = () => {
           </MetaDataContainer>
         </TaskContainer>
         <TimerContainer>
-          <span>00:00</span>
-          {!makeEntry
-            ? <button type="button" onClick={startTimer}>Start</button>
-            : <button type="submit">Submit</button>
+          <span>{formatTime(timer)}</span>
+          {!isActive
+            ? <Button type="button" onClick={startTimer}>
+              <img src={PlayIcon} alt="Play" width="50" />
+            </Button>
+            : <Button type="submit">
+              <img src={StopIcon} alt="Stop" width="50" />
+            </Button>
           }
         </TimerContainer>
       </Form>
