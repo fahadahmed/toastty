@@ -8,8 +8,7 @@ import Entries from './Entries.component';
 function Dashboard(): JSX.Element {
   const { currentUser } = useContext(AppContext);
   const [entries, setEntries] = useState([]);
-  console.log(currentUser);
-
+  
   const handleNewEntry = (e: React.SyntheticEvent) => {
     e.preventDefault();
     const target = e.target as typeof e.target & {

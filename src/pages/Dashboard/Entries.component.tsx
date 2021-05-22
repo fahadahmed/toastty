@@ -78,19 +78,19 @@ const Entries = () => {
       <Heading>Previous Entries</Heading>
       <div>
         {SAMPLE_DATA.map((entry, i) => (
-          <Entry>
+          <Entry key={i}>
             <DescriptionContainer>
               <EntryHeader>{entry.description}</EntryHeader>
               <MetaDataContainer>
                 <div style={{display: "flex", alignContent: "center"}}>
                   <svg height="30" width="30">
-                    <circle cx="15" cy="15" r="14" stroke={buttonBorder} stroke-width="2" fill={buttonBackground} />
+                    <circle cx="15" cy="15" r="14" stroke={buttonBorder} strokeWidth="2" fill={buttonBackground} />
                   </svg>
                   <span style={{lineHeight: '30px', paddingLeft: '10px', color: buttonBorder}}>{entry.project}</span>
                 </div>
                 <div style={{display: "flex", alignContent: "center"}}>
                   <svg height="30" width="30">
-                    <circle cx="15" cy="15" r="14" stroke="#feb253" stroke-width="2" fill="#F9deb1" />
+                    <circle cx="15" cy="15" r="14" stroke="#feb253" strokeWidth="2" fill="#F9deb1" />
                   </svg>
                   <span style={{lineHeight: '30px', paddingLeft: '10px', color: "#feb253"}}>{entry.client}</span>
                 </div>
