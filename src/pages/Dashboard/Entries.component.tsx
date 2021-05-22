@@ -35,7 +35,7 @@ const TimeContainer = styled.div`
   justify-content: center;
   align-items: center;
   font-size: 36px;
-  color: #feb253;
+  color: #888888;
   font-weight: lighter;
 `;
 const EntryHeader = styled.h3`
@@ -86,13 +86,13 @@ const Entries = () => {
                   <svg height="30" width="30">
                     <circle cx="15" cy="15" r="14" stroke={buttonBorder} stroke-width="2" fill={buttonBackground} />
                   </svg>
-                  <span style={{lineHeight: '30px', paddingLeft: '10px'}}>{entry.project}</span>
+                  <span style={{lineHeight: '30px', paddingLeft: '10px', color: buttonBorder}}>{entry.project}</span>
                 </div>
                 <div style={{display: "flex", alignContent: "center"}}>
                   <svg height="30" width="30">
-                    <circle cx="15" cy="15" r="14" stroke={buttonBorder} stroke-width="2" fill={buttonBackground} />
+                    <circle cx="15" cy="15" r="14" stroke="#feb253" stroke-width="2" fill="#F9deb1" />
                   </svg>
-                  <span style={{lineHeight: '30px', paddingLeft: '10px'}}>{entry.client}</span>
+                  <span style={{lineHeight: '30px', paddingLeft: '10px', color: "#feb253"}}>{entry.client}</span>
                 </div>
                 <div></div>
               </MetaDataContainer>
