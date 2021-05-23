@@ -1,13 +1,9 @@
 import React, { FC, useContext } from 'react';
 import { Link, Redirect } from 'react-router-dom';
-import { db } from '../../config/firebase';
 import {AppContext} from '../../components/AppProvider/AppContext';
-import { auth } from '../../config/firebase';
 
 const Home: FC = () => {
-  //const db = fire.firestore();
-  db.doc('hello/world').set({hello: 'world' });
-  //console.log(fire);
+  
   const { currentUser } = useContext(AppContext);
   if(currentUser) {
     return <Redirect to='/dashboard' />
