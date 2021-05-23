@@ -2,8 +2,8 @@ import React, { useState, useContext } from 'react';
 import { AppContext } from '../../components/AppProvider/AppContext';
 import Timer from '../../components/Timer';
 import Header from '../../components/Header';
-import AddEntry from './AddEntry.component';
-import Entries from './Entries.component';
+import AddEntry from './components/AddEntry';
+import Entries from './components/Entries';
 
 function Dashboard(): JSX.Element {
   const { currentUser } = useContext(AppContext);

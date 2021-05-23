@@ -11,7 +11,7 @@ const Container = styled.div`
   flex-direction: row nowrap;
   border-bottom: 1px solid ${borderColor};
   justify-content: space-between;
-  padding: 10px;
+  padding: 10px 80px;
   align-items: center;
 `;
 
