@@ -1,7 +1,7 @@
 import React, { useState, useContext } from 'react';
 import { Link, Redirect } from 'react-router-dom';
 import { AppContext } from '../../components/AppProvider/AppContext';
-import { auth } from '../../config/firebase';
+import { auth, db } from '../../config/firebase';
 
 function Register(): JSX.Element {
 
@@ -18,10 +18,25 @@ function Register(): JSX.Element {
     const password = target.password.value;
     const name = target.name.value;
 
+    // TODO: refactor this using async await paradaigm
     auth().createUserWithEmailAndPassword(email, password)
       .then(result => {
+        console.log(result.user);
         result.user.updateProfile({
           displayName: name
+        })
+        db.collection('userData').add({
+          id: result.user.uid,
+          entries: [],
+          projects: [],
+          clients: [],
+          tags: []
+        })
+        .then( res => {
+          console.log("User created in userData collection:", res.id);
+        })
+        .catch(err => {
+          console.log(err.message);
         })
       })
       .catch(err => {
