@@ -25,15 +25,16 @@ function Register(): JSX.Element {
         result.user.updateProfile({
           displayName: name
         })
-        db.collection('userData').add({
-          id: result.user.uid,
+
+        const collection = db.collection('userData');
+        collection.doc(result.user.uid).set({
           entries: [],
           projects: [],
           clients: [],
           tags: []
         })
         .then( res => {
-          console.log("User created in userData collection:", res.id);
+          console.log("User created in userData collection.");
         })
         .catch(err => {
           console.log(err.message);
