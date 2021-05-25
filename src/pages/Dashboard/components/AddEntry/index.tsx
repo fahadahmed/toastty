@@ -16,6 +16,11 @@ import {
 import { db } from '../../../../config/firebase';
 import { AppContext } from '../../../../components/AppProvider/AppContext';
 
+const isItemInArray = (item: string, array: Array<string>) => {
+  const itemExists = array.includes(item);
+  return itemExists;
+}
+
 const AddEntry = () => {
   const { timer, isActive, handleStart, handleReset } = useTimer();
   const { currentUser } = useContext(AppContext);
@@ -39,8 +44,14 @@ const AddEntry = () => {
     const userData = await db.collection('userData').doc(currentUser.uid).get();
     let { entries, clients, projects } = userData.data();
     entries.push(entry);
-    if (client !== '') clients.push(client);
-    if (project !== 'Unnamed Project') projects.push(project);
+    if (client !== '') {
+      const clientExists = isItemInArray(client, clients);
+      if (!clientExists) clients.push(client);
+    }
+    if (project !== 'Unnamed Project') {
+      const projectExists = isItemInArray(project, projects);
+      if (!projectExists) projects.push(project);
+    };
     const dbWrite = db.collection('userData').doc(currentUser.uid).set({
       entries,
       projects,

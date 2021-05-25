@@ -98,7 +98,7 @@ const Entries = () => {
           ))}
         </div>
       }
-      {entries.length === 0 && <div>Create a new time entry for a project.</div>}``
+      {entries.length === 0 && <div>Create a new time entry for a project.</div>}
     </Container>
   );
 }
