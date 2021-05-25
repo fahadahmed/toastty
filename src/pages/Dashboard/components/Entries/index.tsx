@@ -66,8 +66,6 @@ const Entries = () => {
     fetchData();
   }, []);
 
-  console.log(userData);
-
   return(
     <Container>
       <Heading>Previous Entries</Heading>
@@ -84,12 +82,15 @@ const Entries = () => {
                     </svg>
                     <span style={{lineHeight: '30px', paddingLeft: '10px', color: buttonBorder}}>{entry.project}</span>
                   </div>
-                  <div style={{display: "flex", alignContent: "center"}}>
-                    <svg height="30" width="30">
-                      <circle cx="15" cy="15" r="14" stroke="#feb253" strokeWidth="2" fill="#F9deb1" />
-                    </svg>
-                    <span style={{lineHeight: '30px', paddingLeft: '10px', color: "#feb253"}}>{entry.client}</span>
-                  </div>
+                 {entry.client === '' 
+                  ? <div></div>
+                  :  <div style={{display: "flex", alignContent: "center"}}>
+                      <svg height="30" width="30">
+                        <circle cx="15" cy="15" r="14" stroke="#feb253" strokeWidth="2" fill="#F9deb1" />
+                      </svg>
+                      <span style={{lineHeight: '30px', paddingLeft: '10px', color: "#feb253"}}>{entry.client}</span>
+                    </div>
+                  }
                   <div></div>
                 </MetaDataContainer>
               </DescriptionContainer>
