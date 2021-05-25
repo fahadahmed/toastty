@@ -13,7 +13,7 @@ import {
   TimerContainer,
   Button
 } from './styles';
-import { db, auth } from '../../../../config/firebase';
+import { db } from '../../../../config/firebase';
 import { AppContext } from '../../../../components/AppProvider/AppContext';
 
 const AddEntry = () => {
@@ -37,7 +37,6 @@ const AddEntry = () => {
     }
 
     const userData = await db.collection('userData').doc(currentUser.uid).get();
-    console.log(userData.data());
     let { entries, clients, projects } = userData.data();
     entries.push(entry);
     if (client !== '') clients.push(client);
@@ -64,7 +63,6 @@ const AddEntry = () => {
     const description = target.description.value;
     const project = target.project.value;
     const client = target.client.value;
-    console.log(description, project, client, timer);
     addToDB(description, project, client, timer);
     handleReset();
   }

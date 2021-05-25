@@ -51,26 +51,15 @@ interface UserData {
 };
 
 const Entries = () => {
-  const [entries, setEntries] = useState(SAMPLE_DATA);
+  const [entries, setEntries] = useState([]);
   const { currentUser } = useContext(AppContext);
   const [userData, setUserData] = useState(null);
 
-  const fetchData = () => {
-    db.collection('userData')
-    .get()
-    .then(collection => {
-      collection.docs.map(item => {
-        if(currentUser.uid === item.id) {
-          setUserData({
-            id: item.id,
-            data: item.data()
-          })
-        }
-      });
-    })
-    .catch(err => {
-      console.log(err.message);
-    });
+  const fetchData = async () => {
+    const result = await db.collection('userData')
+    .doc(currentUser.uid)
+    .get();
+    setEntries(result.data().entries);
   }
 
   useEffect(() => {
@@ -82,31 +71,34 @@ const Entries = () => {
   return(
     <Container>
       <Heading>Previous Entries</Heading>
-      <div>
-        {entries.map((entry, i) => (
-          <Entry key={i}>
-            <DescriptionContainer>
-              <EntryHeader>{entry.description}</EntryHeader>
-              <MetaDataContainer>
-                <div style={{display: "flex", alignContent: "center"}}>
-                  <svg height="30" width="30">
-                    <circle cx="15" cy="15" r="14" stroke={buttonBorder} strokeWidth="2" fill={buttonBackground} />
-                  </svg>
-                  <span style={{lineHeight: '30px', paddingLeft: '10px', color: buttonBorder}}>{entry.project}</span>
-                </div>
-                <div style={{display: "flex", alignContent: "center"}}>
-                  <svg height="30" width="30">
-                    <circle cx="15" cy="15" r="14" stroke="#feb253" strokeWidth="2" fill="#F9deb1" />
-                  </svg>
-                  <span style={{lineHeight: '30px', paddingLeft: '10px', color: "#feb253"}}>{entry.client}</span>
-                </div>
-                <div></div>
-              </MetaDataContainer>
-            </DescriptionContainer>
-            <TimeContainer>{formatTime(entry.time)}</TimeContainer>
-          </Entry>
-        ))}
-      </div>
+      {entries.length > 0 &&
+        <div>
+          {entries.map((entry, i) => (
+            <Entry key={i}>
+              <DescriptionContainer>
+                <EntryHeader>{entry.description}</EntryHeader>
+                <MetaDataContainer>
+                  <div style={{display: "flex", alignContent: "center"}}>
+                    <svg height="30" width="30">
+                      <circle cx="15" cy="15" r="14" stroke={buttonBorder} strokeWidth="2" fill={buttonBackground} />
+                    </svg>
+                    <span style={{lineHeight: '30px', paddingLeft: '10px', color: buttonBorder}}>{entry.project}</span>
+                  </div>
+                  <div style={{display: "flex", alignContent: "center"}}>
+                    <svg height="30" width="30">
+                      <circle cx="15" cy="15" r="14" stroke="#feb253" strokeWidth="2" fill="#F9deb1" />
+                    </svg>
+                    <span style={{lineHeight: '30px', paddingLeft: '10px', color: "#feb253"}}>{entry.client}</span>
+                  </div>
+                  <div></div>
+                </MetaDataContainer>
+              </DescriptionContainer>
+              <TimeContainer>{formatTime(entry.timer)}</TimeContainer>
+            </Entry>
+          ))}
+        </div>
+      }
+      {entries.length === 0 && <div>Create a new time entry for a project.</div>}
     </Container>
   );
 }
