@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect, useContext } from 'react';
 import { buttonBackground, buttonBorder } from '../../../../styles/variables';
 import { formatTime } from '../../../../components/Timer/helper';
 import {
@@ -10,6 +10,8 @@ import {
   TimeContainer,
   Heading
 } from './styles';
+import { db, auth } from '../../../../config/firebase';
+import { AppContext } from '../../../../components/AppProvider/AppContext';
 
 const SAMPLE_DATA = [
   {
@@ -38,8 +40,44 @@ const SAMPLE_DATA = [
   }
 ]
 
+interface UserData {
+  id: string;
+  data:{
+    entries: [],
+    tags: [],
+    clients: [],
+    projects: []
+  }
+};
+
 const Entries = () => {
   const [entries, setEntries] = useState(SAMPLE_DATA);
+  const { currentUser } = useContext(AppContext);
+  const [userData, setUserData] = useState(null);
+
+  const fetchData = () => {
+    db.collection('userData')
+    .get()
+    .then(collection => {
+      collection.docs.map(item => {
+        if(currentUser.uid === item.id) {
+          setUserData({
+            id: item.id,
+            data: item.data()
+          })
+        }
+      });
+    })
+    .catch(err => {
+      console.log(err.message);
+    });
+  }
+
+  useEffect(() => {
+    fetchData();
+  }, []);
+
+  console.log(userData);
 
   return(
     <Container>

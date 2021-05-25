@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState, useContext } from 'react';
 import useTimer from '../../../../components/Timer/useTimer';
 import { formatTime } from '../../../../components/Timer/helper';
 import PlayIcon from '../../../../assets/icons/play-circle-solid.svg';
@@ -13,9 +13,45 @@ import {
   TimerContainer,
   Button
 } from './styles';
+import { db, auth } from '../../../../config/firebase';
+import { AppContext } from '../../../../components/AppProvider/AppContext';
 
 const AddEntry = () => {
   const { timer, isActive, handleStart, handleReset } = useTimer();
+  const { currentUser } = useContext(AppContext);
+
+  const addToDB = async (
+    description: string,
+    project: string,
+    client: string,
+    timer: number
+  ) => {
+    if (description === '') description = 'Unnamed Task';
+    if (project === '') project = 'Unnamed Project';
+
+    let entry = {
+      description,
+      project,
+      client,
+      timer
+    }
+
+    const userData = await db.collection('userData').doc(currentUser.uid).get();
+    console.log(userData.data());
+    let { entries, clients, projects } = userData.data();
+    entries.push(entry);
+    if (client !== '') clients.push(client);
+    if (project !== 'Unnamed Project') projects.push(project);
+    const dbWrite = db.collection('userData').doc(currentUser.uid).set({
+      entries,
+      projects,
+      clients,
+      tags: []
+    });
+    if(dbWrite) {
+      console.log("Record updated");
+    }
+  }
 
   const handleSubmission = (e: React.SyntheticEvent) => {
     e.preventDefault();
@@ -29,6 +65,7 @@ const AddEntry = () => {
     const project = target.project.value;
     const client = target.client.value;
     console.log(description, project, client, timer);
+    addToDB(description, project, client, timer);
     handleReset();
   }
 
