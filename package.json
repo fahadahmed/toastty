@@ -2,7 +2,7 @@
   "name": "toastty",
   "version": "0.0.1",
   "main": "index.js",
-  "repository": "https://github.com/fhdahmd/toastty.git",
+  "repository": "https://github.com/fahadahmed/toastty.git",
   "author": "Fahad Ahmed <fahad.ahmed@me.com>",
   "license": "MIT",
   "devDependencies": {
