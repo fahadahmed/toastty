@@ -10,50 +10,12 @@ import {
   TimeContainer,
   Heading
 } from './styles';
-import { db, auth } from '../../../../config/firebase';
+import { db } from '../../../../config/firebase';
 import { AppContext } from '../../../../components/AppProvider/AppContext';
-
-const SAMPLE_DATA = [
-  {
-    description: "Sample Description",
-    project: "Test Project",
-    client: "Test Client",
-    time: 1000
-  },
-  {
-    description: "Sample Description",
-    project: "Test Project",
-    client: "Test Client 2",
-    time: 150
-  },
-  {
-    description: "Sample Description",
-    project: "Test Project",
-    client: "Test Client",
-    time: 390
-  },
-  {
-    description: "Sample Description",
-    project: "Test Project",
-    client: "Test Client 3",
-    time: 800
-  }
-]
-
-interface UserData {
-  id: string;
-  data:{
-    entries: [],
-    tags: [],
-    clients: [],
-    projects: []
-  }
-};
 
 const Entries = () => {
   const [entries, setEntries] = useState([]);
   const { currentUser } = useContext(AppContext);
-  const [userData, setUserData] = useState(null);
 
   const fetchData = async () => {
     const result = await db.collection('userData')
