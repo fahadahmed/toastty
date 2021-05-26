@@ -1,6 +1,11 @@
 import React, { FC, useContext } from 'react';
 import { Link, Redirect } from 'react-router-dom';
 import {AppContext} from '../../components/AppProvider/AppContext';
+import {
+  Container,
+  Card,
+  LinkButton
+} from '../../styles/common.styles';
 
 const Home: FC = () => {
   
@@ -9,13 +14,14 @@ const Home: FC = () => {
     return <Redirect to='/dashboard' />
   }
   return(
-    <>
-      <h1>Home Page</h1>
-      <div>
-        <div><Link to="/login">Login</Link></div>
-        <div><Link to="/register">Register New User</Link></div>
-      </div>
-    </>
+    <Container>
+      <Card>
+        <h1>Toastty</h1>
+        <p>A time tracking app to make you productive.</p>
+        <LinkButton to="/login">Login</LinkButton>
+        <LinkButton to="/register">Register New User</LinkButton>
+      </Card>
+    </Container>
   );
 }
 
