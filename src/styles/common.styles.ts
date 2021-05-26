@@ -45,8 +45,39 @@ const LinkButton = styled(Link)`
   }
 `;
 
+const FormButton = styled.button`
+  background: ${buttonBackground};
+  padding: 10px;
+  text-decoration: none;
+  color: ${fontColor};
+  font-weight: bold;
+  border: 2px solid ${buttonBorder};
+  margin: 10px;
+
+  &:hover {
+    background: ${buttonBorder};
+    color: white;
+  }
+`;
+
+const PublicForm = styled.form`
+  display: flex;
+  flex-direction: column;
+`;
+
+const FormInput = styled.input`
+  border: 1px solid ${borderColor};
+  padding: 10px;
+  color: ${fontColor};
+  font-size: 20px;
+  margin: 10px;
+`;
+
 export {
   Container,
   Card,
-  LinkButton
+  LinkButton,
+  PublicForm,
+  FormInput,
+  FormButton
 };

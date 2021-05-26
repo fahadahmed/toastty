@@ -3,6 +3,14 @@ import { Link, Redirect } from 'react-router-dom';
 import { AppContext } from '../../components/AppProvider/AppContext';
 import { auth, db } from '../../config/firebase';
 
+import {
+  Container,
+  Card,
+  PublicForm,
+  FormInput,
+  FormButton
+} from '../../styles/common.styles';
+
 function Register(): JSX.Element {
 
   const [error, setError] = useState(null);
@@ -52,22 +60,23 @@ function Register(): JSX.Element {
   }
 
   return(
-    <>
-      <h1>Register New User</h1>
-      <div>
+    <Container>
+      <Card>
+        <h1>Register New User</h1>
         <div>
-          <Link to='/home'>Home</Link>
-          <Link to='/login'>Login</Link>
+          <div>
+            <Link to='/home'>Home Page</Link>
+          </div>
+        <PublicForm onSubmit={handleSubmit}>
+          <FormInput type="text" name="name" placeholder="your name" required />
+          <FormInput type="email" name="email" placeholder="email address" required />
+          <FormInput type="password" name="password" placeholder="password" required />
+          <FormButton type="submit">Register User</FormButton>
+          {error !== null && <p>Error: {error}</p>}
+        </PublicForm>
         </div>
-      <form onSubmit={handleSubmit}>
-        <input type="text" name="name" placeholder="your name" required />
-        <input type="email" name="email" placeholder="email address" required />
-        <input type="password" name="password" placeholder="password" required />
-        <button type="submit">Register User</button>
-        {error !== null && <p>Error: {error}</p>}
-      </form>
-      </div>
-    </>
+      </Card>
+    </Container>
   )
 }
 

@@ -2,6 +2,13 @@ import React, { useState, useContext } from 'react';
 import { Link, Redirect } from 'react-router-dom';
 import {AppContext} from '../../components/AppProvider/AppContext';
 import { auth } from '../../config/firebase';
+import { 
+  Container,
+  Card,
+  PublicForm,
+  FormInput,
+  FormButton
+} from '../../styles/common.styles';
 
 function Login(): JSX.Element {
   const [error, setError] = useState(null);
@@ -27,18 +34,20 @@ function Login(): JSX.Element {
   }
 
   return(
-    <>
-      <h1>Login Page</h1>
-      <div>
-        <Link to='/home'>Home Page</Link>
-        <form onSubmit={handleLogin}>
-          <input type="email" placeholder="email address" name="email" required />
-          <input type="password" placeholder="password" name="password" required />
-          <button type="submit">Login</button>
-          {error !== null && <p>Error: {error}</p>}
-        </form>
-      </div>
-    </>
+    <Container>
+      <Card>
+        <h1>Login Page</h1>
+        <div>
+          <Link to='/home'>Home Page</Link>
+          <PublicForm onSubmit={handleLogin}>
+            <FormInput type="email" placeholder="email address" name="email" required />
+            <FormInput type="password" placeholder="password" name="password" required />
+            <FormButton type="submit">Login</FormButton>
+            {error !== null && <p>Error: {error}</p>}
+          </PublicForm>
+        </div>
+      </Card>
+    </Container>
   )
 }
 
