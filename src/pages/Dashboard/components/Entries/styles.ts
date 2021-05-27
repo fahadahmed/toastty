@@ -15,7 +15,7 @@ const Entry = styled.div`
   padding: 10px;
   border-radius: 3px;
   display: grid;
-  grid-template-columns: 10fr 2fr;
+  grid-template-columns: 9fr 2fr 1fr;
   min-height: 80px;
 `;
 const DescriptionContainer = styled.div`

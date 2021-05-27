@@ -12,6 +12,7 @@ import {
 } from './styles';
 import { db } from '../../../../config/firebase';
 import { AppContext } from '../../../../components/AppProvider/AppContext';
+import { IEntry } from '../../../../models/Entry';
 
 const Entries = () => {
   const [entries, setEntries] = useState([]);
@@ -22,6 +23,10 @@ const Entries = () => {
     .doc(currentUser.uid)
     .get();
     setEntries(result.data().entries);
+  }
+
+  const deleteEntry = (entry: IEntry) => {
+    console.log("We need to delete this entry", entry);
   }
 
   useEffect(() => {
@@ -57,6 +62,7 @@ const Entries = () => {
                 </MetaDataContainer>
               </DescriptionContainer>
               <TimeContainer>{formatTime(entry.timer)}</TimeContainer>
+              <button onClick={() => deleteEntry(entry)}>Options</button>
             </Entry>
           ))}
         </div>
