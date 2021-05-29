@@ -1,0 +1,9 @@
+{
+  "name": "toastty",
+  "version": "0.3.0",
+  "description": "A time tracking app to make people productive",
+  "main": "index.js",
+  "repository": "https://github.com/fahadahmed/toastty.git",
+  "author": "Fahad Ahmed <fahad.ahmed@me.com>",
+  "license": "MIT"
+}
