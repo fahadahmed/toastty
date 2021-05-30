@@ -12,16 +12,50 @@ import {
 } from './styles';
 import { db } from '../../../../config/firebase';
 import { AppContext } from '../../../../components/AppProvider/AppContext';
+import Menu from '@material-ui/core/Menu';
+import MenuItem from '@material-ui/core/MenuItem';
+import IconButton from '@material-ui/core/IconButton';
+import MoreIcon from '@material-ui/icons/MoreVert';
+
 
 const Entries = () => {
   const [entries, setEntries] = useState([]);
+  const [userData,setUserData] = useState(null);
   const { currentUser } = useContext(AppContext);
+  const [anchorEl, setAnchorEl] = useState<null | HTMLElement>(null);
 
-  const fetchData = async () => {
-    const result = await db.collection('userData')
+  const handleClick = (event: React.MouseEvent<HTMLButtonElement>) => {
+    setAnchorEl(event.currentTarget);
+  }
+
+  const handleClose = () => {
+    setAnchorEl(null);
+  }
+
+  const fetchData = () => {
+    db.collection('userData')
     .doc(currentUser.uid)
-    .get();
-    setEntries(result.data().entries);
+    .onSnapshot(result => {
+      setEntries(result.data().entries);
+      setUserData(result.data());
+    });
+  }
+
+  const deleteEntry = (index: number) => {
+    handleClose();
+    let updatedEntries = entries;
+    updatedEntries.splice(index,1);
+    setEntries(updatedEntries);
+    const dbWrite = db.collection('userData').doc(currentUser.uid).set({
+      tags: [],
+      projects: userData.projects,
+      clients: userData.clients,
+      entries: entries
+    })
+    if(dbWrite) {
+      console.log("Record with entries updated");
+    }
+    
   }
 
   useEffect(() => {
@@ -57,6 +91,21 @@ const Entries = () => {
                 </MetaDataContainer>
               </DescriptionContainer>
               <TimeContainer>{formatTime(entry.timer)}</TimeContainer>
+              <div style={{display: 'grid', justifyContent: 'center', alignItems: 'center'}}>
+                <IconButton onClick={handleClick}>
+                  <MoreIcon />
+                </IconButton>
+                <Menu
+                  id="simple-menu"
+                  anchorEl={anchorEl}
+                  keepMounted
+                  open={Boolean(anchorEl)}
+                  onClose={handleClose}
+                >
+                  <MenuItem onClick={handleClose}>Edit</MenuItem>
+                  <MenuItem onClick={() => deleteEntry(i)}>Delete</MenuItem>
+                </Menu>
+              </div>
             </Entry>
           ))}
         </div>
