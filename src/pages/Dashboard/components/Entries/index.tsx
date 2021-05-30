@@ -22,7 +22,6 @@ const Entries = () => {
     db.collection('userData')
     .doc(currentUser.uid)
     .onSnapshot(result => {
-      console.log(result.data());
       setEntries(result.data().entries);
       setUserData(result.data());
     });
