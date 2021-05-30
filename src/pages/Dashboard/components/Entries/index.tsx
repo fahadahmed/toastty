@@ -22,6 +22,15 @@ const Entries = () => {
   const [entries, setEntries] = useState([]);
   const [userData,setUserData] = useState(null);
   const { currentUser } = useContext(AppContext);
+  const [anchorEl, setAnchorEl] = useState<null | HTMLElement>(null);
+
+  const handleClick = (event: React.MouseEvent<HTMLButtonElement>) => {
+    setAnchorEl(event.currentTarget);
+  }
+
+  const handleClose = () => {
+    setAnchorEl(null);
+  }
 
   const fetchData = () => {
     db.collection('userData')
@@ -33,6 +42,7 @@ const Entries = () => {
   }
 
   const deleteEntry = (index: number) => {
+    handleClose();
     let updatedEntries = entries;
     updatedEntries.splice(index,1);
     setEntries(updatedEntries);
@@ -82,9 +92,19 @@ const Entries = () => {
               </DescriptionContainer>
               <TimeContainer>{formatTime(entry.timer)}</TimeContainer>
               <div style={{display: 'grid', justifyContent: 'center', alignItems: 'center'}}>
-                <IconButton onClick={() => deleteEntry(i)}>
+                <IconButton onClick={handleClick}>
                   <MoreIcon />
                 </IconButton>
+                <Menu
+                  id="simple-menu"
+                  anchorEl={anchorEl}
+                  keepMounted
+                  open={Boolean(anchorEl)}
+                  onClose={handleClose}
+                >
+                  <MenuItem onClick={handleClose}>Edit</MenuItem>
+                  <MenuItem onClick={() => deleteEntry(i)}>Delete</MenuItem>
+                </Menu>
               </div>
             </Entry>
           ))}
