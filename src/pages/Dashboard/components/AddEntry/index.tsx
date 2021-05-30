@@ -75,6 +75,7 @@ const AddEntry = () => {
     const project = target.project.value;
     const client = target.client.value;
     addToDB(description, project, client, timer);
+    e.target.reset();
     handleReset();
   }
 
@@ -84,7 +85,7 @@ const AddEntry = () => {
   }
   return(
     <Container>
-      <Form onSubmit={handleSubmission}>
+      <Form onSubmit={handleSubmission} name="AddEntryForm">
         <TaskContainer>
           <DescriptionInput type="text" name="description" placeholder="What are you working on?" />
           <MetaDataContainer>

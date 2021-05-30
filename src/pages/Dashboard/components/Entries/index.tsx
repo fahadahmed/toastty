@@ -16,17 +16,37 @@ import { IEntry } from '../../../../models/Entry';
 
 const Entries = () => {
   const [entries, setEntries] = useState([]);
+  const [userData,setUserData] = useState(null);
   const { currentUser } = useContext(AppContext);
 
-  const fetchData = async () => {
-    const result = await db.collection('userData')
+  const fetchData = () => {
+    db.collection('userData')
     .doc(currentUser.uid)
-    .get();
-    setEntries(result.data().entries);
+    .onSnapshot(result => {
+      console.log(result.data());
+      setEntries(result.data().entries);
+      setUserData(result.data());
+    });
   }
 
-  const deleteEntry = (entry: IEntry) => {
+  const deleteEntry = (entry: IEntry, index: number) => {
     console.log("We need to delete this entry", entry);
+    console.log("entries", entries);
+    let oldEntries = entries;
+    console.log("oldentries", oldEntries);
+    oldEntries.splice(index,1);
+    setEntries(oldEntries);
+    console.log(userData);
+    const dbWrite = db.collection('userData').doc(currentUser.uid).set({
+      tags: [],
+      projects: userData.projects,
+      clients: userData.clients,
+      entries: entries
+    })
+    if(dbWrite) {
+      console.log("Record with entries updated");
+    }
+    
   }
 
   useEffect(() => {
@@ -62,7 +82,7 @@ const Entries = () => {
                 </MetaDataContainer>
               </DescriptionContainer>
               <TimeContainer>{formatTime(entry.timer)}</TimeContainer>
-              <button onClick={() => deleteEntry(entry)}>Options</button>
+              <button onClick={() => deleteEntry(entry, i)}>Options</button>
             </Entry>
           ))}
         </div>
