@@ -12,7 +12,6 @@ import {
 } from './styles';
 import { db } from '../../../../config/firebase';
 import { AppContext } from '../../../../components/AppProvider/AppContext';
-import { IEntry } from '../../../../models/Entry';
 
 const Entries = () => {
   const [entries, setEntries] = useState([]);
@@ -29,14 +28,10 @@ const Entries = () => {
     });
   }
 
-  const deleteEntry = (entry: IEntry, index: number) => {
-    console.log("We need to delete this entry", entry);
-    console.log("entries", entries);
-    let oldEntries = entries;
-    console.log("oldentries", oldEntries);
-    oldEntries.splice(index,1);
-    setEntries(oldEntries);
-    console.log(userData);
+  const deleteEntry = (index: number) => {
+    let updatedEntries = entries;
+    updatedEntries.splice(index,1);
+    setEntries(updatedEntries);
     const dbWrite = db.collection('userData').doc(currentUser.uid).set({
       tags: [],
       projects: userData.projects,
@@ -82,7 +77,7 @@ const Entries = () => {
                 </MetaDataContainer>
               </DescriptionContainer>
               <TimeContainer>{formatTime(entry.timer)}</TimeContainer>
-              <button onClick={() => deleteEntry(entry, i)}>Options</button>
+              <button onClick={() => deleteEntry(i)}>Options</button>
             </Entry>
           ))}
         </div>
