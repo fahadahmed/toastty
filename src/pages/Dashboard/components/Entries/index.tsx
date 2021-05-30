@@ -12,6 +12,11 @@ import {
 } from './styles';
 import { db } from '../../../../config/firebase';
 import { AppContext } from '../../../../components/AppProvider/AppContext';
+import Menu from '@material-ui/core/Menu';
+import MenuItem from '@material-ui/core/MenuItem';
+import IconButton from '@material-ui/core/IconButton';
+import MoreIcon from '@material-ui/icons/MoreVert';
+
 
 const Entries = () => {
   const [entries, setEntries] = useState([]);
@@ -76,7 +81,11 @@ const Entries = () => {
                 </MetaDataContainer>
               </DescriptionContainer>
               <TimeContainer>{formatTime(entry.timer)}</TimeContainer>
-              <button onClick={() => deleteEntry(i)}>Options</button>
+              <div style={{display: 'grid', justifyContent: 'center', alignItems: 'center'}}>
+                <IconButton onClick={() => deleteEntry(i)}>
+                  <MoreIcon />
+                </IconButton>
+              </div>
             </Entry>
           ))}
         </div>
