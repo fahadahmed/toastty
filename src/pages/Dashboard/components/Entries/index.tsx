@@ -15,6 +15,7 @@ import { AppContext } from '../../../../components/AppProvider/AppContext';
 import Menu from '@material-ui/core/Menu';
 import MenuItem from '@material-ui/core/MenuItem';
 import IconButton from '@material-ui/core/IconButton';
+import EditIcon from '@material-ui/icons/EditOutlined';
 import MoreIcon from '@material-ui/icons/MoreVert';
 import DeleteIcon from '@material-ui/icons/DeleteOutline';
 import { IEntry } from '../../../../models/Entry';
@@ -45,6 +46,7 @@ const Entries = () => {
 
   const deleteEntry = (index: number, entriesCopy: IEntry[]) => {
     handleClose();
+    entriesCopy.splice(index, 1);
     setEntries([...entriesCopy]);
     const dbWrite = db.collection('userData').doc(currentUser.uid).set({
       tags: [],
@@ -91,7 +93,7 @@ const Entries = () => {
                 </MetaDataContainer>
               </DescriptionContainer>
               <TimeContainer>{formatTime(entry.timer)}</TimeContainer>
-              <div style={{display: 'grid', justifyContent: 'center', alignItems: 'center'}}>
+              <div style={{display: 'flex', justifyContent: 'center', alignItems: 'center'}}>
                 <IconButton onClick={() => deleteEntry(i, entries)}>
                   <DeleteIcon/>
                 </IconButton>
