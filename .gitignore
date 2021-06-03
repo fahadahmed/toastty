@@ -11,3 +11,5 @@ pubsub-debug.log
 ui-debug.log
 
 .firebase/
+
+data/
