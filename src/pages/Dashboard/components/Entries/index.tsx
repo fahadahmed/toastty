@@ -12,27 +12,28 @@ import {
 } from './styles';
 import { db } from '../../../../config/firebase';
 import { AppContext } from '../../../../components/AppProvider/AppContext';
-import Menu from '@material-ui/core/Menu';
-import MenuItem from '@material-ui/core/MenuItem';
 import IconButton from '@material-ui/core/IconButton';
 import EditIcon from '@material-ui/icons/EditOutlined';
-import MoreIcon from '@material-ui/icons/MoreVert';
 import DeleteIcon from '@material-ui/icons/DeleteOutline';
 import { IEntry } from '../../../../models/Entry';
+import EditEntry from '../EditEntry';
 
+
+import Button from '@material-ui/core/Button';
+import Dialog from '@material-ui/core/Dialog';
+import DialogActions from '@material-ui/core/DialogActions';
+import DialogContent from '@material-ui/core/DialogContent';
+import DialogContentText from '@material-ui/core/DialogContentText';
+import DialogTitle from '@material-ui/core/DialogTitle';
 
 const Entries = () => {
   const [entries, setEntries] = useState([]);
   const [userData,setUserData] = useState(null);
   const { currentUser } = useContext(AppContext);
-  const [anchorEl, setAnchorEl] = useState<null | HTMLElement>(null);
-
-  const handleClick = (event: React.MouseEvent<HTMLButtonElement>) => {
-    setAnchorEl(event.currentTarget);
-  }
+  const [open, setOpen] = useState(false);
 
   const handleClose = () => {
-    setAnchorEl(null);
+    setOpen(false);
   }
 
   const fetchData = () => {
@@ -59,6 +60,10 @@ const Entries = () => {
     }
     
   }
+  const editEntry = (index: number) => {
+    console.log(index);
+    setOpen(true);
+  }
 
   useEffect(() => {
     fetchData();
@@ -72,7 +77,7 @@ const Entries = () => {
           {entries.map((entry, i) => (
             <Entry key={i}>
               <DescriptionContainer>
-                <EntryHeader>{i} - {entry.description}</EntryHeader>
+                <EntryHeader>{entry.description}</EntryHeader>
                 <MetaDataContainer>
                   <div style={{display: "flex", alignContent: "center"}}>
                     <svg height="30" width="30">
@@ -97,25 +102,17 @@ const Entries = () => {
                 <IconButton onClick={() => deleteEntry(i, entries)}>
                   <DeleteIcon/>
                 </IconButton>
-                {/* <IconButton onClick={handleClick}>
-                  <MoreIcon />
+                <IconButton onClick={() => editEntry(i)}>
+                  <EditIcon/>
                 </IconButton>
-                <Menu
-                  id="simple-menu"
-                  anchorEl={anchorEl}
-                  keepMounted
-                  open={Boolean(anchorEl)}
-                  onClose={handleClose}
-                >
-                  <MenuItem onClick={handleClose}>Edit</MenuItem>
-                  <MenuItem onClick={() => deleteEntry(i, entries)}>{i} - Delete</MenuItem>
-                </Menu> */}
+                {open && <EditEntry open={open} handleClose={handleClose} selectedEntry={entry} />}
               </div>
             </Entry>
           ))}
         </div>
       }
       {entries.length === 0 && <div>Create a new time entry for a project.</div>}
+      
     </Container>
   );
 }
