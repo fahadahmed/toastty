@@ -16,6 +16,8 @@ import Menu from '@material-ui/core/Menu';
 import MenuItem from '@material-ui/core/MenuItem';
 import IconButton from '@material-ui/core/IconButton';
 import MoreIcon from '@material-ui/icons/MoreVert';
+import DeleteIcon from '@material-ui/icons/DeleteOutline';
+import { IEntry } from '../../../../models/Entry';
 
 
 const Entries = () => {
@@ -41,11 +43,9 @@ const Entries = () => {
     });
   }
 
-  const deleteEntry = (index: number) => {
+  const deleteEntry = (index: number, entriesCopy: IEntry[]) => {
     handleClose();
-    let updatedEntries = entries;
-    updatedEntries.splice(index,1);
-    setEntries(updatedEntries);
+    setEntries([...entriesCopy]);
     const dbWrite = db.collection('userData').doc(currentUser.uid).set({
       tags: [],
       projects: userData.projects,
@@ -70,7 +70,7 @@ const Entries = () => {
           {entries.map((entry, i) => (
             <Entry key={i}>
               <DescriptionContainer>
-                <EntryHeader>{entry.description}</EntryHeader>
+                <EntryHeader>{i} - {entry.description}</EntryHeader>
                 <MetaDataContainer>
                   <div style={{display: "flex", alignContent: "center"}}>
                     <svg height="30" width="30">
@@ -92,7 +92,10 @@ const Entries = () => {
               </DescriptionContainer>
               <TimeContainer>{formatTime(entry.timer)}</TimeContainer>
               <div style={{display: 'grid', justifyContent: 'center', alignItems: 'center'}}>
-                <IconButton onClick={handleClick}>
+                <IconButton onClick={() => deleteEntry(i, entries)}>
+                  <DeleteIcon/>
+                </IconButton>
+                {/* <IconButton onClick={handleClick}>
                   <MoreIcon />
                 </IconButton>
                 <Menu
@@ -103,8 +106,8 @@ const Entries = () => {
                   onClose={handleClose}
                 >
                   <MenuItem onClick={handleClose}>Edit</MenuItem>
-                  <MenuItem onClick={() => deleteEntry(i)}>Delete</MenuItem>
-                </Menu>
+                  <MenuItem onClick={() => deleteEntry(i, entries)}>{i} - Delete</MenuItem>
+                </Menu> */}
               </div>
             </Entry>
           ))}
