@@ -12,24 +12,20 @@ import {
 } from './styles';
 import { db } from '../../../../config/firebase';
 import { AppContext } from '../../../../components/AppProvider/AppContext';
-import Menu from '@material-ui/core/Menu';
-import MenuItem from '@material-ui/core/MenuItem';
 import IconButton from '@material-ui/core/IconButton';
-import MoreIcon from '@material-ui/icons/MoreVert';
-
+import EditIcon from '@material-ui/icons/EditOutlined';
+import DeleteIcon from '@material-ui/icons/DeleteOutline';
+import { IEntry } from '../../../../models/Entry';
+import EditEntry from '../EditEntry';
 
 const Entries = () => {
   const [entries, setEntries] = useState([]);
   const [userData,setUserData] = useState(null);
   const { currentUser } = useContext(AppContext);
-  const [anchorEl, setAnchorEl] = useState<null | HTMLElement>(null);
-
-  const handleClick = (event: React.MouseEvent<HTMLButtonElement>) => {
-    setAnchorEl(event.currentTarget);
-  }
+  const [open, setOpen] = useState(-1);
 
   const handleClose = () => {
-    setAnchorEl(null);
+    setOpen(-1);
   }
 
   const fetchData = () => {
@@ -41,11 +37,10 @@ const Entries = () => {
     });
   }
 
-  const deleteEntry = (index: number) => {
+  const deleteEntry = (index: number, entriesCopy: IEntry[]) => {
     handleClose();
-    let updatedEntries = entries;
-    updatedEntries.splice(index,1);
-    setEntries(updatedEntries);
+    entriesCopy.splice(index, 1);
+    setEntries([...entriesCopy]);
     const dbWrite = db.collection('userData').doc(currentUser.uid).set({
       tags: [],
       projects: userData.projects,
@@ -56,6 +51,10 @@ const Entries = () => {
       console.log("Record with entries updated");
     }
     
+  }
+  const editEntry = (index: number) => {
+    console.log(index);
+    setOpen(index);
   }
 
   useEffect(() => {
@@ -91,26 +90,21 @@ const Entries = () => {
                 </MetaDataContainer>
               </DescriptionContainer>
               <TimeContainer>{formatTime(entry.timer)}</TimeContainer>
-              <div style={{display: 'grid', justifyContent: 'center', alignItems: 'center'}}>
-                <IconButton onClick={handleClick}>
-                  <MoreIcon />
+              <div style={{display: 'flex', justifyContent: 'center', alignItems: 'center'}}>
+                <IconButton onClick={() => deleteEntry(i, entries)}>
+                  <DeleteIcon/>
                 </IconButton>
-                <Menu
-                  id="simple-menu"
-                  anchorEl={anchorEl}
-                  keepMounted
-                  open={Boolean(anchorEl)}
-                  onClose={handleClose}
-                >
-                  <MenuItem onClick={handleClose}>Edit</MenuItem>
-                  <MenuItem onClick={() => deleteEntry(i)}>Delete</MenuItem>
-                </Menu>
+                <IconButton onClick={() => editEntry(i)}>
+                  <EditIcon/>
+                </IconButton>
+                {(open === i) && <EditEntry open={open === i} handleClose={handleClose} selectedEntry={entry} index={i} />}
               </div>
             </Entry>
           ))}
         </div>
       }
       {entries.length === 0 && <div>Create a new time entry for a project.</div>}
+      
     </Container>
   );
 }
