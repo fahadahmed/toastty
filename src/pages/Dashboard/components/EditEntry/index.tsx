@@ -1,4 +1,4 @@
-import React, { FC, useState } from 'react';
+import React, { FC, useState, useContext } from 'react';
 
 import Button from '@material-ui/core/Button';
 import Dialog from '@material-ui/core/Dialog';
@@ -11,6 +11,8 @@ import Grid from '@material-ui/core/Grid';
 import { IEntry } from '../../../../models/Entry';
 import { formatTime } from '../../../../components/Timer/helper';
 import styled from '@emotion/styled';
+import { AppContext} from '../../../../components/AppProvider/AppContext';
+import { db } from '../../../../config/firebase';
 
 interface Props {
   open: boolean,
@@ -28,9 +30,36 @@ const TimeStyles = styled.span`
 
 const EditEntry:FC<Props> = ({open, handleClose, selectedEntry, index}) => {
   const [editingEntry, setEditingEntry] = useState(selectedEntry);
+  const {currentUser} = useContext(AppContext);
 
-  const updateEntry = () => {
-    console.log("We need to update the time entry with these details", editingEntry, index);
+  const updateEntry = async () => {
+    const user = await db.collection('userData').doc(currentUser.uid).get();
+    let entries = [...user.data().entries];
+    let updatedEntries: IEntry[] = [];
+    entries.forEach((entry, i) => {
+      if(i === index) {
+        updatedEntries.push(editingEntry);
+      } else {
+        updatedEntries.push(entry);
+      }
+    });
+
+    let projects = user.data().projects;
+    let clients = user.data().clients;
+
+    projects.includes(editingEntry.project) ? projects : projects.push(editingEntry.project);
+    clients.includes(editingEntry.client) ? clients : clients.push(editingEntry.client);  
+    const dbWrite = db.collection('userData').doc(currentUser.uid).set({
+      tags: [],
+      projects: projects,
+      clients: clients,
+      entries: updatedEntries
+    })
+    if(dbWrite) {
+      console.log("Record with entries updated");
+    }
+    console.log("Entries after", updatedEntries);
+    handleClose();
   }
   return(
     <Dialog
@@ -64,7 +93,7 @@ const EditEntry:FC<Props> = ({open, handleClose, selectedEntry, index}) => {
               label="Project"
               onChange={e => setEditingEntry(prevState => ({
                 ...prevState,
-                description: e.target.value
+                project: e.target.value
               }))}
             />
           </Grid>
@@ -75,7 +104,7 @@ const EditEntry:FC<Props> = ({open, handleClose, selectedEntry, index}) => {
               label="Client"
               onChange={e => setEditingEntry(prevState => ({
                 ...prevState,
-                description: e.target.value
+                client: e.target.value
               }))}
             />
           </Grid>
