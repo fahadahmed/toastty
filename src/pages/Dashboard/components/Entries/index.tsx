@@ -18,22 +18,14 @@ import DeleteIcon from '@material-ui/icons/DeleteOutline';
 import { IEntry } from '../../../../models/Entry';
 import EditEntry from '../EditEntry';
 
-
-import Button from '@material-ui/core/Button';
-import Dialog from '@material-ui/core/Dialog';
-import DialogActions from '@material-ui/core/DialogActions';
-import DialogContent from '@material-ui/core/DialogContent';
-import DialogContentText from '@material-ui/core/DialogContentText';
-import DialogTitle from '@material-ui/core/DialogTitle';
-
 const Entries = () => {
   const [entries, setEntries] = useState([]);
   const [userData,setUserData] = useState(null);
   const { currentUser } = useContext(AppContext);
-  const [open, setOpen] = useState(false);
+  const [open, setOpen] = useState(-1);
 
   const handleClose = () => {
-    setOpen(false);
+    setOpen(-1);
   }
 
   const fetchData = () => {
@@ -62,7 +54,7 @@ const Entries = () => {
   }
   const editEntry = (index: number) => {
     console.log(index);
-    setOpen(true);
+    setOpen(index);
   }
 
   useEffect(() => {
@@ -105,7 +97,7 @@ const Entries = () => {
                 <IconButton onClick={() => editEntry(i)}>
                   <EditIcon/>
                 </IconButton>
-                {open && <EditEntry open={open} handleClose={handleClose} selectedEntry={entry} />}
+                {(open === i) && <EditEntry open={open === i} handleClose={handleClose} selectedEntry={entry} index={i} />}
               </div>
             </Entry>
           ))}
