@@ -1,4 +1,4 @@
-import React, { useState, useContext } from 'react';
+import React, { useState, useEffect, useContext } from 'react';
 import useTimer from '../../../../components/Timer/useTimer';
 import { formatTime } from '../../../../components/Timer/helper';
 import PlayIcon from '../../../../assets/icons/play-circle-solid.svg';
@@ -6,15 +6,15 @@ import StopIcon from '../../../../assets/icons/stop-circle-solid.svg';
 import {
   Container,
   Form,
-  TaskContainer,
-  DescriptionInput,
-  MetaDataContainer,
-  MetaDataInput,
   TimerContainer,
   Button
 } from './styles';
 import { db } from '../../../../config/firebase';
 import { AppContext } from '../../../../components/AppProvider/AppContext';
+import TextField from '@material-ui/core/TextField';
+import Autocomplete from '@material-ui/lab/Autocomplete';
+import {IUserData} from '../../../../models/UserData';
+import Grid from '@material-ui/core/Grid';
 
 const isItemInArray = (item: string, array: Array<string>) => {
   const itemExists = array.includes(item);
@@ -24,6 +24,7 @@ const isItemInArray = (item: string, array: Array<string>) => {
 const AddEntry = () => {
   const { timer, isActive, handleStart, handleReset } = useTimer();
   const { currentUser } = useContext(AppContext);
+  const [user, setUser] = useState<IUserData|null>(null);
 
   const addToDB = async (
     description: string,
@@ -83,16 +84,58 @@ const AddEntry = () => {
     e.preventDefault();
     handleStart();
   }
+
+  const fetchUserDetails = async() => {
+    const userData = await db.collection('userData').doc(currentUser.uid).get();
+    setUser({
+      entries: userData.data().entries,
+      projects: userData.data().projects,
+      clients: userData.data().clients,
+      tags: userData.data().tags
+    });
+  }
+
+  useEffect(() => {
+    fetchUserDetails();
+  },[]);
+
   return(
     <Container>
       <Form onSubmit={handleSubmission} name="AddEntryForm">
-        <TaskContainer>
-          <DescriptionInput type="text" name="description" placeholder="What are you working on?" />
-          <MetaDataContainer>
-            <MetaDataInput type="text" name="project" placeholder="project name" />
-            <MetaDataInput type="text" name="client" placeholder="client name" />
-          </MetaDataContainer>
-        </TaskContainer>
+        <Grid container spacing={2}>
+          <Grid item xs={12}>
+            <TextField
+              label="What are you working on?"
+              name="description"
+              variant="outlined"
+              fullWidth
+              autoComplete="off"
+            />
+          </Grid>
+          <Grid item xs={6}>
+          <Autocomplete 
+              id="combo-projects"
+              options={user ? user.projects : []}
+              getOptionLabel={option => option}
+              renderInput={
+                (params) =>
+                  <TextField {...params} label="Project Name" variant="outlined" name="project" />
+              }
+            />
+            
+          </Grid>
+          <Grid item xs={6}>
+          <Autocomplete 
+              id="combo-clients"
+              options={user ? user.clients : []}
+              getOptionLabel={option => option}
+              renderInput={
+                (params) =>
+                  <TextField {...params} label="Client Name" variant="outlined" name="client" />
+              }
+            />
+          </Grid>
+        </Grid>
         <TimerContainer>
           <span>{formatTime(timer)}</span>
           {!isActive
