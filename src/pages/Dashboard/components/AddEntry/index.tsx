@@ -15,6 +15,8 @@ import TextField from '@material-ui/core/TextField';
 import Autocomplete from '@material-ui/lab/Autocomplete';
 import {IUserData} from '../../../../models/UserData';
 import Grid from '@material-ui/core/Grid';
+import ChipInput from 'material-ui-chip-input';
+import { TagFacesTwoTone } from '@material-ui/icons';
 
 const isItemInArray = (item: string, array: Array<string>) => {
   const itemExists = array.includes(item);
@@ -25,6 +27,7 @@ const AddEntry = () => {
   const { timer, isActive, handleStart, handleReset } = useTimer();
   const { currentUser } = useContext(AppContext);
   const [user, setUser] = useState<IUserData|null>(null);
+  const [tags, setTags] = useState([]);
 
   const addToDB = async (
     description: string,
@@ -39,11 +42,13 @@ const AddEntry = () => {
       description,
       project,
       client,
-      timer
+      timer,
+      tags
     }
 
     const userData = await db.collection('userData').doc(currentUser.uid).get();
     let { entries, clients, projects } = userData.data();
+    let masterTags = userData.data().tags;
     entries.push(entry);
     if (client !== '') {
       const clientExists = isItemInArray(client, clients);
@@ -53,11 +58,18 @@ const AddEntry = () => {
       const projectExists = isItemInArray(project, projects);
       if (!projectExists) projects.push(project);
     };
+    console.log(masterTags);
+    if(tags.length > 0) {
+      tags.forEach(tag => {
+        const tagExists = isItemInArray(tag, masterTags);
+        if(!tagExists) masterTags.push(tag);
+      })
+    }
     const dbWrite = db.collection('userData').doc(currentUser.uid).set({
       entries,
       projects,
       clients,
-      tags: []
+      tags: masterTags
     });
     if(dbWrite) {
       console.log("Record updated");
@@ -68,8 +80,8 @@ const AddEntry = () => {
     e.preventDefault();
     const target = e.target as typeof e.target & {
       description: {value: string },
-      project: { value: string };
-      client: { value: string };
+      project: { value: string },
+      client: { value: string }
     };
 
     const description = target.description.value;
@@ -93,6 +105,19 @@ const AddEntry = () => {
       clients: userData.data().clients,
       tags: userData.data().tags
     });
+  }
+
+  const handleAddTag = (e: React.SyntheticEvent) => {
+    console.log(e);
+    let updatedTags = [...tags];
+    updatedTags.push(e);
+    setTags([...updatedTags]);
+  }
+
+  const handleDeleteTag = (chip: string, index:number) => {
+    let updatedTags = [...tags];
+    updatedTags.splice(index, 1);
+    setTags([...updatedTags]);
   }
 
   useEffect(() => {
@@ -133,6 +158,16 @@ const AddEntry = () => {
                 (params) =>
                   <TextField {...params} label="Client Name" variant="outlined" name="client" />
               }
+            />
+          </Grid>
+          <Grid item xs={12}>
+            <ChipInput 
+              value={tags} 
+              fullWidth 
+              variant="outlined" 
+              label="Add a tag" 
+              onAdd={handleAddTag}
+              onDelete={(chip, index) => handleDeleteTag(chip, index)}
             />
           </Grid>
         </Grid>
