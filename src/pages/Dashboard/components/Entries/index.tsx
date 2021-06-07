@@ -17,6 +17,7 @@ import EditIcon from '@material-ui/icons/EditOutlined';
 import DeleteIcon from '@material-ui/icons/DeleteOutline';
 import { IEntry } from '../../../../models/Entry';
 import EditEntry from '../EditEntry';
+import Chip from '@material-ui/core/Chip';
 
 const Entries = () => {
   const [entries, setEntries] = useState([]);
@@ -42,7 +43,7 @@ const Entries = () => {
     entriesCopy.splice(index, 1);
     setEntries([...entriesCopy]);
     const dbWrite = db.collection('userData').doc(currentUser.uid).set({
-      tags: [],
+      tags: userData.tags,
       projects: userData.projects,
       clients: userData.clients,
       entries: entries
@@ -53,7 +54,6 @@ const Entries = () => {
     
   }
   const editEntry = (index: number) => {
-    console.log(index);
     setOpen(index);
   }
 
@@ -86,7 +86,16 @@ const Entries = () => {
                       <span style={{lineHeight: '30px', paddingLeft: '10px', color: "#feb253"}}>{entry.client}</span>
                     </div>
                   }
-                  <div></div>
+                  <div>
+                    {entry.tags
+                      ? <div>
+                        {entry.tags.map((tag: string, i: number) => (
+                          <Chip variant="outlined" size="small" label={tag} key={i} />
+                        ))}
+                      </div>
+                      : <div></div>
+                    }
+                  </div>
                 </MetaDataContainer>
               </DescriptionContainer>
               <TimeContainer>{formatTime(entry.timer)}</TimeContainer>
