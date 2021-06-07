@@ -51,7 +51,7 @@
     "@types/react-dom": "^17.0.5",
     "@types/react-router-dom": "^5.1.7",
     "core-js": "^3.12.1",
-    "dns-packet": "5.2.2",
+    "dns-packet": "5.2.4",
     "dotenv": "^10.0.0",
     "firebase": "^8.6.2",
     "fs": "^0.0.2",
