@@ -17,6 +17,7 @@ import EditIcon from '@material-ui/icons/EditOutlined';
 import DeleteIcon from '@material-ui/icons/DeleteOutline';
 import { IEntry } from '../../../../models/Entry';
 import EditEntry from '../EditEntry';
+import Chip from '@material-ui/core/Chip';
 
 const Entries = () => {
   const [entries, setEntries] = useState([]);
@@ -42,7 +43,7 @@ const Entries = () => {
     entriesCopy.splice(index, 1);
     setEntries([...entriesCopy]);
     const dbWrite = db.collection('userData').doc(currentUser.uid).set({
-      tags: [],
+      tags: userData.tags,
       projects: userData.projects,
       clients: userData.clients,
       entries: entries
@@ -66,7 +67,9 @@ const Entries = () => {
       <Heading>Previous Entries</Heading>
       {entries.length > 0 &&
         <div>
-          {entries.map((entry, i) => (
+          {entries.map((entry, i) => {
+            console.log(entry.tags);
+            return (
             <Entry key={i}>
               <DescriptionContainer>
                 <EntryHeader>{entry.description}</EntryHeader>
@@ -86,7 +89,16 @@ const Entries = () => {
                       <span style={{lineHeight: '30px', paddingLeft: '10px', color: "#feb253"}}>{entry.client}</span>
                     </div>
                   }
-                  <div></div>
+                  <div>
+                    {entry.tags
+                      ? <div>
+                        {entry.tags.map((tag: string, i: number) => (
+                          <Chip variant="outlined" size="small" label={tag} key={i} />
+                        ))}
+                      </div>
+                      : <div></div>
+                    }
+                  </div>
                 </MetaDataContainer>
               </DescriptionContainer>
               <TimeContainer>{formatTime(entry.timer)}</TimeContainer>
@@ -100,7 +112,7 @@ const Entries = () => {
                 {(open === i) && <EditEntry open={open === i} handleClose={handleClose} selectedEntry={entry} index={i} />}
               </div>
             </Entry>
-          ))}
+          )})}
         </div>
       }
       {entries.length === 0 && <div>Create a new time entry for a project.</div>}
