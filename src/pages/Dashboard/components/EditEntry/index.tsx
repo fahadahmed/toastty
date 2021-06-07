@@ -58,7 +58,6 @@ const EditEntry:FC<Props> = ({open, handleClose, selectedEntry, index}) => {
     if(dbWrite) {
       console.log("Record with entries updated");
     }
-    console.log("Entries after", updatedEntries);
     handleClose();
   }
   return(

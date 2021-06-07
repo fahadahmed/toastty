@@ -54,7 +54,6 @@ const Entries = () => {
     
   }
   const editEntry = (index: number) => {
-    console.log(index);
     setOpen(index);
   }
 
@@ -67,9 +66,7 @@ const Entries = () => {
       <Heading>Previous Entries</Heading>
       {entries.length > 0 &&
         <div>
-          {entries.map((entry, i) => {
-            console.log(entry.tags);
-            return (
+          {entries.map((entry, i) => (
             <Entry key={i}>
               <DescriptionContainer>
                 <EntryHeader>{entry.description}</EntryHeader>
@@ -112,7 +109,7 @@ const Entries = () => {
                 {(open === i) && <EditEntry open={open === i} handleClose={handleClose} selectedEntry={entry} index={i} />}
               </div>
             </Entry>
-          )})}
+          ))}
         </div>
       }
       {entries.length === 0 && <div>Create a new time entry for a project.</div>}

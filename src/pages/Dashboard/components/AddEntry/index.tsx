@@ -58,7 +58,6 @@ const AddEntry = () => {
       const projectExists = isItemInArray(project, projects);
       if (!projectExists) projects.push(project);
     };
-    console.log(masterTags);
     if(tags.length > 0) {
       tags.forEach(tag => {
         const tagExists = isItemInArray(tag, masterTags);
@@ -108,7 +107,6 @@ const AddEntry = () => {
   }
 
   const handleAddTag = (e: React.SyntheticEvent) => {
-    console.log(e);
     let updatedTags = [...tags];
     updatedTags.push(e);
     setTags([...updatedTags]);
