@@ -13,6 +13,10 @@ const Container = styled.div`
   justify-content: space-between;
   padding: 10px 80px;
   align-items: center;
+
+  @media screen and (max-width: 425px) {
+    padding: 10px;
+  }
 `;
 
 const Title = styled.div`
@@ -20,6 +24,10 @@ const Title = styled.div`
   font-weight: bolder;
   color: ${fontColor};
   text-transform: uppercase;
+
+  @media screen and (max-width: 425px) {
+    font-size: 20px;
+  }
 `;
 
 const LogoutBtn = styled.button`
@@ -31,10 +39,15 @@ const LogoutBtn = styled.button`
   padding: 10px;
   border-radius: 3px;
   min-width: 120px;
+  @media screen and (max-width: 425px) {
+    font-size: 12px;
+    padding: 5px;
+    min-width: 60px;
+  }
 `;
 
 const Username = styled.span`
-  font-size: 16px;
+  font-size: 12px;
   font-weight: bolder;
   text-transform: uppercase;
   color: ${fontColor};

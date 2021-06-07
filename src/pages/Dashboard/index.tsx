@@ -7,8 +7,8 @@ function Dashboard(): JSX.Element {
   return(
     <div>
       <Header />
-      <AddEntry />
-      <Entries />
+      {/* <AddEntry />
+      <Entries /> */}
     </div>
   )
 }
