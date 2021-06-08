@@ -3,12 +3,12 @@ module.exports = {
   verbose: true,
   transform: {
     '^.+\\jsx?$': 'babel-jest',
-    '^.+\\tsx?$': 'ts-jest',
+    '^.+\\.(ts|tsx)?$': 'ts-jest',
   },
   testPathIgnorePatterns: ['node_modules', 'public', 'coverage', 'jest.config.ts'],
-  collectCoverage: false,
+  collectCoverage: true,
   collectCoverageFrom: ['**/*.{js,jsx,ts,tsx', '!coverage/**', '!public/**'],
   testRegex: '(/__tests__/.*|(\\.|/)(test|spec))\\.tsx?$',
-  moduleFilesExtensions: ['ts', 'tsx', 'js', 'jsx', 'json', 'node'],
+  moduleFileExtensions: ['ts', 'tsx', 'js', 'jsx', 'json', 'node'],
   watchman: true,
 };

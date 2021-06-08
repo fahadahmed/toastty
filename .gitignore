@@ -13,3 +13,4 @@ ui-debug.log
 .firebase/
 
 data/
+coverage/
