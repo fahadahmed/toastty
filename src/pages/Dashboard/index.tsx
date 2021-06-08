@@ -8,7 +8,7 @@ function Dashboard(): JSX.Element {
     <div>
       <Header />
       <AddEntry />
-      {/*  <Entries /> */}
+      <Entries />
     </div>
   )
 }
