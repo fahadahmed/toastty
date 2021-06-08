@@ -72,23 +72,23 @@ const Entries = () => {
                 <EntryHeader>{entry.description}</EntryHeader>
                 <MetaDataContainer>
                   <div style={{display: "flex", alignContent: "center"}}>
-                    <svg height="30" width="30">
-                      <circle cx="15" cy="15" r="14" stroke={buttonBorder} strokeWidth="2" fill={buttonBackground} />
+                    <svg height="26" width="26">
+                      <circle cx="13" cy="13" r="12" stroke={buttonBorder} strokeWidth="2" fill={buttonBackground} />
                     </svg>
-                    <span style={{lineHeight: '30px', paddingLeft: '10px', color: buttonBorder}}>{entry.project}</span>
+                    <span style={{lineHeight: '26px', paddingLeft: '10px', color: buttonBorder, fontSize: "13px"}}>{entry.project}</span>
                   </div>
                  {entry.client === '' 
                   ? <div></div>
                   :  <div style={{display: "flex", alignContent: "center"}}>
-                      <svg height="30" width="30">
-                        <circle cx="15" cy="15" r="14" stroke="#feb253" strokeWidth="2" fill="#F9deb1" />
+                      <svg height="26" width="26">
+                        <circle cx="13" cy="13" r="12" stroke="#feb253" strokeWidth="2" fill="#F9deb1" />
                       </svg>
-                      <span style={{lineHeight: '30px', paddingLeft: '10px', color: "#feb253"}}>{entry.client}</span>
+                      <span style={{lineHeight: '26px', paddingLeft: '10px', color: "#feb253", fontSize: "13px"}}>{entry.client}</span>
                     </div>
                   }
                   <div>
                     {entry.tags
-                      ? <div>
+                      ? <div style={{display: 'flex', paddingBottom: '10px'}}>
                         {entry.tags.map((tag: string, i: number) => (
                           <Chip variant="outlined" size="small" label={tag} key={i} />
                         ))}

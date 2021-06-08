@@ -140,6 +140,7 @@ const AddEntry = () => {
               id="combo-projects"
               options={user ? user.projects : []}
               getOptionLabel={option => option}
+              freeSolo={true}
               renderInput={
                 (params) =>
                   <TextField {...params} label="Project Name" variant="outlined" name="project" />
@@ -152,6 +153,7 @@ const AddEntry = () => {
               id="combo-clients"
               options={user ? user.clients : []}
               getOptionLabel={option => option}
+              freeSolo={true}
               renderInput={
                 (params) =>
                   <TextField {...params} label="Client Name" variant="outlined" name="client" />

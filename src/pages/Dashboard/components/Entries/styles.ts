@@ -3,6 +3,10 @@ import { fontColor, borderColor } from '../../../../styles/variables';
 
 const Container = styled.div`
   padding: 0px 80px;
+
+  @media screen and (max-width: 425px) {
+    padding: 0px 10px;
+  }
 `;
 const Heading = styled.h1`
   font-weight: lighter;
@@ -17,6 +21,10 @@ const Entry = styled.div`
   display: grid;
   grid-template-columns: 9fr 2fr 1fr;
   min-height: 80px;
+
+  @media screen and (max-width: 425px) {
+    grid-template-columns: 1fr;
+  }
 `;
 const DescriptionContainer = styled.div`
   display: flex;
@@ -27,6 +35,12 @@ const MetaDataContainer = styled.div`
   display: flex;
   flex-direction: row nowrap;
   justify-content: space-between;
+
+  @media screen and (max-width: 425px) {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    grid-gap: 10px;
+  }
 `;
 const TimeContainer = styled.div`
   display: grid;
@@ -40,6 +54,11 @@ const EntryHeader = styled.h3`
   margin: 0;
   color: ${fontColor};
   font-size: 24px;
+
+  @media screen and (max-width: 425px) {
+    font-size: 20px;
+    margin-bottom: 10px;
+  }
 `;
 
 export {
