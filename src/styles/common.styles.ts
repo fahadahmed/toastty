@@ -28,6 +28,10 @@ const Card = styled.div`
     font-size: 24px;
     font-weight: lighter;
   }
+
+  @media screen and (max-width: 425px) {
+    width: 360px;
+  }
 `;
 
 const LinkButton = styled(Link)`
