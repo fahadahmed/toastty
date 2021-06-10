@@ -14,3 +14,5 @@ ui-debug.log
 
 data/
 coverage/
+
+.dccache
