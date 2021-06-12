@@ -87,7 +87,7 @@ const AddEntry = () => {
     const project = target.project.value;
     const client = target.client.value;
     addToDB(description, project, client, timer);
-    e.target.reset();
+    // e.target.reset();
     handleReset();
   }
 
