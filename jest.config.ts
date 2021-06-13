@@ -3,12 +3,21 @@ module.exports = {
   verbose: true,
   transform: {
     '^.+\\jsx?$': 'babel-jest',
-    '^.+\\tsx?$': 'ts-jest',
+    '^.+\\.(ts|tsx)?$': 'ts-jest',
   },
-  testPathIgnorePatterns: ['node_modules', 'public', 'coverage', 'jest.config.ts'],
+  testPathIgnorePatterns: [
+    'node_modules',
+    'public',
+    'coverage', 
+    'jest.config.ts',
+    'functions'
+  ],
+  setupFiles: [
+    'dotenv/config'
+  ],
   collectCoverage: false,
-  collectCoverageFrom: ['**/*.{js,jsx,ts,tsx', '!coverage/**', '!public/**'],
+  collectCoverageFrom: ['**/*.{js,jsx,ts,tsx}', '!coverage/**', '!public/**', '!functions/**'],
   testRegex: '(/__tests__/.*|(\\.|/)(test|spec))\\.tsx?$',
-  moduleFilesExtensions: ['ts', 'tsx', 'js', 'jsx', 'json', 'node'],
+  moduleFileExtensions: ['ts', 'tsx', 'js', 'jsx', 'json', 'node'],
   watchman: true,
 };
