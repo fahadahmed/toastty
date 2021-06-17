@@ -26,7 +26,6 @@ function Register(): JSX.Element {
     const password = target.password.value;
     const name = target.name.value;
 
-    // TODO: refactor this using async await paradaigm
     auth().createUserWithEmailAndPassword(email, password)
       .then(result => {
         console.log(result.user);

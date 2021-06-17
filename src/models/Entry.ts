@@ -4,4 +4,4 @@ export interface IEntry {
   client: string,
   tags: Array<string>,
   timer: number
-};
+}
