@@ -56,7 +56,7 @@ const AddEntry = () => {
     if (project !== 'Unnamed Project') {
       const projectExists = isItemInArray(project, projects);
       if (!projectExists) projects.push(project);
-    };
+    }
     if(tags.length > 0) {
       tags.forEach(tag => {
         const tagExists = isItemInArray(tag, masterTags);
@@ -80,7 +80,7 @@ const AddEntry = () => {
       description: {value: string },
       project: { value: string },
       client: { value: string }
-    };
+    }
 
     const description = target.description.value;
     const project = target.project.value;

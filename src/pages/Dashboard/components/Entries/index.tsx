@@ -89,8 +89,8 @@ const Entries = () => {
                   <div>
                     {entry.tags
                       ? <div style={{display: 'flex', paddingBottom: '10px'}}>
-                        {entry.tags.map((tag: string, i: number) => (
-                          <Chip variant="outlined" size="small" label={tag} key={i} />
+                        {entry.tags.map((tag: string, j: number) => (
+                          <Chip variant="outlined" size="small" label={tag} key={j} />
                         ))}
                       </div>
                       : <div></div>
