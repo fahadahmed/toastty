@@ -17,10 +17,8 @@ import {IUserData} from '../../../../models/UserData';
 import Grid from '@material-ui/core/Grid';
 import ChipInput from 'material-ui-chip-input';
 
-const isItemInArray = (item: string, array: Array<string>) => {
-  const itemExists = array.includes(item);
-  return itemExists;
-}
+const isItemInArray = 
+  (item: string, array: Array<string>) => array.includes(item);
 
 const AddEntry = () => {
   const { timer, isActive, handleStart, handleReset } = useTimer();
