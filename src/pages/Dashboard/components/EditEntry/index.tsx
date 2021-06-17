@@ -47,8 +47,12 @@ const EditEntry:FC<Props> = ({open, handleClose, selectedEntry, index}) => {
     let projects = user.data().projects;
     let clients = user.data().clients;
 
-    projects.includes(editingEntry.project) ? projects : projects.push(editingEntry.project);
-    clients.includes(editingEntry.client) ? clients : clients.push(editingEntry.client);  
+    if(!projects.includes(editingEntry.project)) {
+      projects.push(editingEntry.project);
+    }
+    if(!clients.includes(editingEntry.client)) {
+      clients.push(editingEntry.client);
+    } 
     const dbWrite = db.collection('userData').doc(currentUser.uid).set({
       tags: [],
       projects: projects,
