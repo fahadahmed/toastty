@@ -9,7 +9,6 @@ type Props = {
 
 export const AppProvider: FC<Props> = ({ children }) => {
   const [currentUser, setCurrentUser] = useState(null);
-  const [theme, setTheme] = useState('light');
   const [showSidebar, setShowSidebar] = useState(false);
 
   const toggleSidebar = () => setShowSidebar(!showSidebar);

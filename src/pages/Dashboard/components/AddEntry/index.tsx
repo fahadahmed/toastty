@@ -16,7 +16,6 @@ import Autocomplete from '@material-ui/lab/Autocomplete';
 import {IUserData} from '../../../../models/UserData';
 import Grid from '@material-ui/core/Grid';
 import ChipInput from 'material-ui-chip-input';
-import { TagFacesTwoTone } from '@material-ui/icons';
 
 const isItemInArray = (item: string, array: Array<string>) => {
   const itemExists = array.includes(item);
@@ -33,7 +32,7 @@ const AddEntry = () => {
     description: string,
     project: string,
     client: string,
-    timer: number
+    timeRecorded: number
   ) => {
     if (description === '') description = 'Unnamed Task';
     if (project === '') project = 'Unnamed Project';
@@ -42,7 +41,7 @@ const AddEntry = () => {
       description,
       project,
       client,
-      timer,
+      timer: timeRecorded,
       tags
     }
 
@@ -87,7 +86,6 @@ const AddEntry = () => {
     const project = target.project.value;
     const client = target.client.value;
     addToDB(description, project, client, timer);
-    // e.target.reset();
     handleReset();
   }
 

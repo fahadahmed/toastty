@@ -21,7 +21,7 @@ function Login(): JSX.Element {
     };
     const email = target.email.value;
     const password = target.password.value;
-    const lgn = auth().signInWithEmailAndPassword(email, password)
+    auth().signInWithEmailAndPassword(email, password)
     .catch(err => {
       console.log(err);
       setError(err.message);

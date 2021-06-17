@@ -1,5 +1,5 @@
 import React, { FC, useContext } from 'react';
-import { Link, Redirect } from 'react-router-dom';
+import { Redirect } from 'react-router-dom';
 import {AppContext} from '../../components/AppProvider/AppContext';
 import {
   Container,
