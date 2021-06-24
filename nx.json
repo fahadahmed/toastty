@@ -19,12 +19,33 @@
     }
   },
   "projects": {
+    "admin": {
+      "tags": []
+    },
+    "admin-e2e": {
+      "tags": [],
+      "implicitDependencies": ["admin"]
+    },
     "app": {
       "tags": []
     },
     "app-e2e": {
       "tags": [],
       "implicitDependencies": ["app"]
+    },
+    "blog": {
+      "tags": []
+    },
+    "blog-e2e": {
+      "tags": [],
+      "implicitDependencies": ["blog"]
+    },
+    "website": {
+      "tags": []
+    },
+    "website-e2e": {
+      "tags": [],
+      "implicitDependencies": ["website"]
     }
   }
 }
