@@ -16,3 +16,4 @@ data/
 coverage/
 
 .dccache
+.DS_Store
