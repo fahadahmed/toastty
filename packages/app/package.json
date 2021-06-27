@@ -1,0 +1,63 @@
+{
+  "name": "@toastty/app",
+  "version": "0.0.3",
+  "main": "index.js",
+  "author": "Fahad Ahmed",
+  "license": "MIT",
+  "devDependencies": {
+    "@babel/core": "^7.14.6",
+    "@babel/preset-env": "^7.14.7",
+    "@babel/preset-react": "^7.14.5",
+    "@babel/preset-typescript": "^7.14.5",
+    "@emotion/babel-plugin": "^11.3.0",
+    "@testing-library/react": "^12.0.0",
+    "@types/dotenv": "^8.2.0",
+    "@types/firebase": "^3.2.1",
+    "babel-loader": "^8.2.2",
+    "babel-plugin-transform-runtime": "^6.23.0",
+    "dotenv-webpack": "^7.0.3",
+    "file-loader": "^6.2.0",
+    "html-webpack-plugin": "^5.3.2",
+    "jest": "^27.0.5",
+    "path": "^0.12.7",
+    "rimraf": "^3.0.2",
+    "ts-jest": "^27.0.3",
+    "tsconfig-paths-webpack-plugin": "^3.5.1",
+    "webpack": "^5.40.0",
+    "webpack-cli": "^4.7.2",
+    "webpack-dev-server": "^3.11.2"
+  },
+  "dependencies": {
+    "@emotion/core": "^11.0.0",
+    "@emotion/react": "^11.4.0",
+    "@emotion/styled": "^11.3.0",
+    "@material-ui/core": "^4.11.4",
+    "@material-ui/icons": "^4.11.2",
+    "@material-ui/lab": "^4.0.0-alpha.58",
+    "@types/jest": "^26.0.23",
+    "@types/node": "^15.12.5",
+    "@types/react": "^17.0.11",
+    "@types/react-dom": "^17.0.8",
+    "@types/react-router-dom": "^5.1.7",
+    "core-js": "^3.15.1",
+    "dotenv": "^10.0.0",
+    "firebase": "^8.6.8",
+    "material-ui-chip-input": "^1.1.0",
+    "react": "^17.0.2",
+    "react-dom": "^17.0.2",
+    "react-router-dom": "^5.2.0",
+    "regenerator-runtime": "^0.13.7",
+    "ts-node": "^10.0.0",
+    "typescript": "^4.3.4"
+  },
+  "scripts": {
+    "start": "webpack serve",
+    "clean": "rimraf ./public/*",
+    "build": "npm run clean && NODE_ENV=production webpack",
+    "test": "jest --config=jest.config.ts",
+    "test-cov": "jest --collect-coverage --config=jest.config.ts"
+  },
+  "browser": {
+    "fs": false
+  }
+}

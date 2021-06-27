@@ -7,22 +7,41 @@
     "predeploy": [
       "npm --prefix \"$RESOURCE_DIR\" run lint",
       "npm --prefix \"$RESOURCE_DIR\" run build"
-    ]
-  },
-  "hosting": {
-    "public": "public",
-    "ignore": [
-      "firebase.json",
-      "**/.*",
-      "**/node_modules/**"
     ],
-    "rewrites": [
-      {
-        "source": "**",
-        "destination": "/index.html"
-      }
-    ]
+    "source": "packages/functions"
   },
+  "hosting": [
+    {
+      "target": "app",
+      "public": "packages/app/public",
+      "ignore": [
+        "firebase.json",
+        "**/.*",
+        "**/node_modules/**"
+      ],
+      "rewrites": [
+        {
+          "source": "**",
+          "destination": "/index.html"
+        }
+      ]
+    },
+    {
+      "target": "website",
+      "public": "packages/website/public",
+      "ignore": [
+        "firebase.json",
+        "**/.*",
+        "**/node_modules/**"
+      ],
+      "rewrites": [
+        {
+          "source": "**",
+          "destination": "/index.html"
+        }
+      ]
+    }
+  ],
   "storage": {
     "rules": "storage.rules"
   },
@@ -34,13 +53,16 @@
       "port": 5001
     },
     "firestore": {
-      "port": 8080
+      "port": 5002
     },
     "hosting": {
       "port": 5000
     },
     "pubsub": {
       "port": 8085
+    },
+    "storage": {
+      "port": 9199
     },
     "ui": {
       "enabled": true

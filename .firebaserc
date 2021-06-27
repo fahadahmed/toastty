@@ -1,5 +1,17 @@
 {
   "projects": {
     "default": "toastty-app"
+  },
+  "targets": {
+    "toastty-app": {
+      "hosting": {
+        "app": [
+          "toastty-app"
+        ],
+        "website": [
+          "toastty"
+        ]
+      }
+    }
   }
 }
