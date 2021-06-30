@@ -12,5 +12,9 @@
   "private": true,
   "workspaces": {
     "packages": ["app", "functions"]
+  },
+  "scripts": {
+    "build": "lerna run build",
+    "test": "lerna run test"
   }
 }
