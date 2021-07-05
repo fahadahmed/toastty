@@ -9,8 +9,6 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v2
-      - run: yarn
-      - run: yarn build
       - uses: iamsauravsharma/create-dotenv@v1.2.0
         env:
           REACT_APP_API_KEY: '${{ secrets.REACT_APP_API_KEY }}'
@@ -21,6 +19,8 @@ jobs:
           REACT_APP_MESSAGING_SENDER_ID: '${{ secrets.REACT_APP_MESSAGING_SENDER_ID }}'
           REACT_APP_PROJECT_ID: '${{ secrets.REACT_APP_PROJECT_ID }}'
           REACT_APP_STORAGE_BUCKET: '${{ secrets.REACT_APP_STORAGE_BUCKET }}'
+      - run: yarn
+      - run: yarn build
       - uses: FirebaseExtended/action-hosting-deploy@v0
         with:
           repoToken: '${{ secrets.GITHUB_TOKEN }}'
