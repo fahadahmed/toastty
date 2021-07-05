@@ -10,6 +10,8 @@ jobs:
     steps:
       - uses: actions/checkout@v2
       - uses: iamsauravsharma/create-dotenv@v1.2.0
+        with:
+          directory: '/packages/app/'
         env:
           REACT_APP_API_KEY: '${{ secrets.REACT_APP_API_KEY }}'
           REACT_APP_API_ID: '${{ secrets.REACT_APP_API_ID }}'
