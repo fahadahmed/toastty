@@ -11,6 +11,10 @@
   },
   "private": true,
   "workspaces": {
-    "packages": ["app", "functions"]
+    "packages": ["packages/app", "packages/admin", "packages/website", "packages/blog", "pacakges/functions"]
+  },
+  "scripts": {
+    "build": "lerna run build",
+    "test": "lerna run test"
   }
 }
